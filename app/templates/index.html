@@ -1,0 +1,41 @@
+{% extends './layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>PokeBall</h1>
+    {% if current_user.is_authenticated %}
+        <p>"Choose Your Pokemon, A Journey Awaits" {{ current_user.username }}</p>
+    {% endif %}
+
+    <form action="/api/status-update" method="POST" class="form-center">
+        <div class="form-group mb-2 w-75 pr-3">
+            <label for="statusInput" class="sr-only">What would you like to do?</label>
+            <input type="text" class="form-control w-100" name="statusInput" id="statusInput" placeholder="Pokemon Name">
+        </div>
+        <div class="form-group mb-2 w-75 pr-3">
+            <label for="statusInput" class="sr-only">What would you like to do?</label>
+            <input type="text" class="form-control w-100" name="typeInput" id="typeInput" placeholder="Pokemon Type">
+        </div>
+        <div class="form-group mb-2 w-75 pr-3">
+            <label for="statusInput" class="sr-only">What would you like to do?</label>
+            <input type="text" class="form-control w-100" name="statInput" id="statInput" placeholder="Pokemon Stat">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 w-25">Add to PokeBall</button>
+    </form>
+
+    {% for p in poki %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <p>{{ p.poki_name }}</p>
+                <p>{{ p.poki_type }}</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <span>{{ p.get_user().username }}</span>
+                <span>{{ p.poki_name }}</span>
+                <span>{{ p.poki_type }}</span>
+                <span>{{ p.date_created }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
